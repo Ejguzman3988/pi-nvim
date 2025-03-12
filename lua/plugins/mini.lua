@@ -9,7 +9,6 @@ return {
 			local minisurround = require 'mini.surround'
 			local miniclue = require 'mini.clue'
 			local minidiff = require 'mini.diff'
-			local mininotify = require 'mini.notify'
 			local minicursorword = require 'mini.cursorword'
 			local miniindentscope = require 'mini.indentscope'
 			local minitabline = require 'mini.tabline'
@@ -17,7 +16,6 @@ return {
 			minitabline.setup()
 			miniindentscope.setup()
 			minicursorword.setup()
-			mininotify.setup()
 			minidiff.setup()
 			miniclue.setup()
 			minisurround.setup()
