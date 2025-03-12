@@ -11,9 +11,7 @@ return {
 			local minidiff = require 'mini.diff'
 			local minicursorword = require 'mini.cursorword'
 			local miniindentscope = require 'mini.indentscope'
-			local minitabline = require 'mini.tabline'
 
-			minitabline.setup()
 			miniindentscope.setup()
 			minicursorword.setup()
 			minidiff.setup()
@@ -89,3 +87,81 @@ return {
 		end
 	}
 }
+
+-- UNUSED PLUGINS
+-- local minitabline = require 'mini.tabline'
+
+-- minitabline.setup({
+-- 	show_icons = true,
+-- 	tabpage_section = (function()
+-- 		-- Set up keymaps for buffer navigation and actions
+-- 		vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "Move Tab Left", noremap = true, silent = true })
+-- 		vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Move Tab Right", noremap = true, silent = true })
+--
+-- 		local pinned_buffers = {} -- Store pinned buffers
+--
+-- 		-- Delete current buffer
+-- 		vim.keymap.set("n", "<space>bd", ":bdelete<CR>", { desc = "Delete Buffer", noremap = true, silent = true })
+--
+-- 		-- Pin/Unpin the current buffer
+-- 		vim.keymap.set("n", "<space>bp", function()
+-- 			local buf = vim.api.nvim_get_current_buf()
+-- 			if pinned_buffers[buf] then
+-- 				pinned_buffers[buf] = nil
+-- 				print("Unpinned buffer " .. buf)
+-- 			else
+-- 				pinned_buffers[buf] = true
+-- 				print("Pinned buffer " .. buf)
+-- 			end
+--
+-- 			vim.cmd("redrawtabline") -- Refresh the tabline after pinning/unpinning
+-- 		end)
+--
+-- 		-- Close all buffers except pinned ones
+-- 		vim.keymap.set("n", "<space>bP", function()
+-- 			local buffers = vim.api.nvim_list_bufs()
+-- 			for _, buf in ipairs(buffers) do
+-- 				if vim.api.nvim_buf_is_valid(buf) and not pinned_buffers[buf] then
+-- 					vim.api.nvim_buf_delete(buf, { force = true })
+-- 				end
+-- 			end
+-- 		end, { desc = "Close All Non-Pinned Buffers", noremap = true, silent = true })
+--
+-- 		-- Navigate to buffer 1-9 with space + number
+-- 		for i = 1, 9 do
+-- 			vim.keymap.set("n", "<space>" .. i, function()
+-- 				vim.cmd("buffer " .. i)
+-- 			end, { desc = "Go to Buffer " .. i, noremap = true, silent = true })
+-- 		end
+--
+-- 		-- Tabline Rendering Logic
+-- 		local buffers = vim.api.nvim_list_bufs()
+-- 		local pinned_tabline_items = {}
+-- 		local unpinned_tabline_items = {}
+--
+-- 		-- Loop over buffers to categorize pinned and unpinned
+-- 		for _, buf in ipairs(buffers) do
+-- 			if vim.api.nvim_buf_is_loaded(buf) then
+-- 				local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
+-- 				local icon = pinned_buffers[buf] and "P " or "" -- Add pin icon
+--
+-- 				-- If pinned, add to pinned tabline items, else to unpinned
+-- 				if pinned_buffers[buf] then
+-- 					table.insert(pinned_tabline_items, icon .. name)
+-- 				else
+-- 					table.insert(unpinned_tabline_items, icon .. name)
+-- 				end
+-- 			end
+-- 		end
+--
+-- 		-- Only show tabline if there are valid buffers
+-- 		if #pinned_tabline_items > 0 or #unpinned_tabline_items > 0 then
+-- 			-- Concatenate pinned buffers first, then unpinned buffers
+-- 			local all_buffers = vim.tbl_extend("force", pinned_tabline_items, unpinned_tabline_items)
+-- 			return table.concat(all_buffers, " | ") -- Return formatted tabline
+-- 		else
+-- 			-- return empty string to hide the tabline
+-- 			return ""
+-- 		end
+-- 	end)()
+-- })

@@ -2,38 +2,45 @@ vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "close terminal" })
 
 local state = {
 	split = {
-		buf = -1,
-		win = -1
+		buf = nil,
+		win = nil
 	}
 }
 
-local function create_bottom_split(opts)
-	opts         = opts or {}
-	local height = opts.height or math.floor(vim.o.lines * 0.3)
+local function create_bottom_split()
+	local height = math.floor(vim.o.lines * 0.3)
 
-	-- Create the split
+	-- Create the split at the bottom
 	vim.cmd("botright " .. height .. "split")
 
 	local win = vim.api.nvim_get_current_win()
-	local buf = nil
+	local buf = state.split.buf
 
-	if vim.api.nvim_buf_is_valid(opts.buf) then
-		buf = opts.buf
+	if buf and vim.api.nvim_buf_is_valid(buf) then
+		-- Reuse the existing buffer
+		vim.api.nvim_win_set_buf(win, buf)
 	else
-		buf = vim.api.nvim_create_buf(false, true) -- Create a scratch buffer
+		-- Create a new buffer if needed
+		buf = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_win_set_buf(win, buf)
+		vim.cmd.terminal()
+		state.split.buf = buf -- Save the buffer for reuse
 	end
 
-	return { buf = buf, win = win }
+	-- Save the window ID for toggling
+	state.split.win = win
+
+	-- Move into terminal mode
+	vim.cmd("startinsert")
 end
 
-local toggle_terminal = function()
-	if not vim.api.nvim_win_is_valid(state.split.win) then
-		state.split = create_bottom_split({ buf = state.split.buf })
-		if vim.bo[state.split.buf].buftype ~= "terminal" then
-			vim.cmd.terminal()
-		end
-	else
+local function toggle_terminal()
+	if state.split.win and vim.api.nvim_win_is_valid(state.split.win) then
+		-- Hide the terminal window
 		vim.api.nvim_win_hide(state.split.win)
+		state.split.win = nil
+	else
+		create_bottom_split()
 	end
 end
 

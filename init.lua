@@ -18,8 +18,6 @@ vim.keymap.set("n", "<M-o>", "<cmd>copen<CR>", { desc = "Quickfix open" })
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Quickfix Next" })
 vim.keymap.set("n", "<M-k>", "<cmd>cnprev<CR>", { desc = "Quickfix prev" })
 
-vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "Move Tab Left", noremap = true, silent = true })
-vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Move Tab Right", noremap = true, silent = true })
 
 -- git
 vim.keymap.set("n", "<leader>ghd", "<cmd>lua MiniDiff.toggle_overlay()<CR>", { desc = "Toggle diff overlay" })
