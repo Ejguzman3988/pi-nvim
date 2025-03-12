@@ -49,7 +49,7 @@ local live_multigrep = function(opts)
 end
 
 M.setup = function()
-	vim.keymap.set("n", "<space>fg", live_multigrep, { desc = "Custom live grep, ('  ': Filters)" })
+	vim.keymap.set("n", "<space>sg", live_multigrep, { desc = "Custom live grep, ('  ': Filters)" })
 end
 
 return M

@@ -1,6 +1,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		lazy = true,
 		dependencies = {
 			"folke/lazydev.nvim",
 			ft = "lua",
@@ -14,7 +15,22 @@ return {
 		},
 		config = function()
 			local capabilities = require('blink.cmp').get_lsp_capabilities()
-			require("lspconfig").lua_ls.setup { capabilities = capabilities }
+			require("lspconfig").lua_ls.setup {
+				capabilities = capabilities,
+				settings = {
+					Lua = {
+						runtime = { version = 'LuaJIT' },
+						workspace = {
+							maxPreload      = 1000,
+							preloadFileSize = 150,
+						},
+						diagnostics = {
+							globals = { 'vim' },
+						},
+						telemetry = { enable = false }
+					}
+				}
+			}
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				callback = function(args)
