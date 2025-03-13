@@ -10,9 +10,20 @@ return {
 	},
 	config = function()
 		require('telescope').setup {
+		  defaults = {
+			file_ignore_patterns = {
+				".git/",
+				"node_modules/",
+				"build/",
+				"package-lock.json",
+				"yarn.lock",
+				"dist/"
+			}
+		  },
 			pickers = {
 				find_files = {
-					theme = "ivy"
+					theme = "ivy",
+					hidden = true,
 				}
 			},
 			extensions = {
@@ -23,13 +34,13 @@ return {
 		require('telescope').load_extension('fzf')
 
 		-- print("")
-		vim.keymap.set('n', '<space>fh', require('telescope.builtin').help_tags)
-		vim.keymap.set('n', '<space>ff', ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
+		vim.keymap.set('n', '<space>fh', require('telescope.builtin').help_tags, {desc = "Find help tags"})
+		vim.keymap.set('n', '<space>ff', require('telescope.builtin').find_files, {desc = "Find Files "})
 		vim.keymap.set('n', '<space>fc', function()
 			require('telescope.builtin').find_files {
 				cwd = vim.fn.stdpath("config")
 			}
-		end)
+		end, { desc = "Find Config Files"})
 
 		-- vim.keymap.set('n', '<space>ep', function()
 		-- 	require('telescope.builtin').find_files {
