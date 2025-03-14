@@ -1,25 +1,25 @@
 return {
-	'akinsho/bufferline.nvim',
+	"akinsho/bufferline.nvim",
 	event = "VeryLazy",
 	keys = {
-		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",            desc = "Toggle Pin" },
+		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
 		{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete Non-Pinned Buffers" },
-		{ "<leader>br", "<Cmd>BufferLineCloseRight<CR>",           desc = "Delete Buffers to the Right" },
-		{ "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>",            desc = "Delete Buffers to the Left" },
-		{ "<leader>bd", "<Cmd>bd<CR>",                             desc = "Close Buffer" },
-		{ "<S-h>",      "<cmd>BufferLineCyclePrev<cr>",            desc = "Prev Buffer" },
-		{ "<S-l>",      "<cmd>BufferLineCycleNext<cr>",            desc = "Next Buffer" },
-		{ "[b",         "<cmd>BufferLineCyclePrev<cr>",            desc = "Prev Buffer" },
-		{ "]b",         "<cmd>BufferLineCycleNext<cr>",            desc = "Next Buffer" },
-		{ "[B",         "<cmd>BufferLineMovePrev<cr>",             desc = "Move buffer prev" },
-		{ "]B",         "<cmd>BufferLineMoveNext<cr>",             desc = "Move buffer next" },
+		{ "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
+		{ "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
+		{ "<leader>bd", "<cmd>bdelete<CR>", desc = "Close Buffer" },
+		{ "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
+		{ "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+		{ "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
+		{ "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+		{ "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
+		{ "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
 	},
 	version = "*",
-	dependencies = 'nvim-tree/nvim-web-devicons',
+	dependencies = "nvim-tree/nvim-web-devicons",
 	config = function()
 		vim.opt.termguicolors = true
-		local bufferline = require('bufferline')
-		bufferline.setup {
+		local bufferline = require("bufferline")
+		bufferline.setup({
 			options = {
 				mode = "buffers", -- set to "tabs" to only show tabpages instead
 				style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
@@ -30,14 +30,14 @@ return {
 				left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
 				middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
 				indicator = {
-					icon = '▎', -- this should be omitted if indicator style is not 'icon'
-					style = 'icon', -- 'icon' | 'underline' | 'none',
+					icon = "▎", -- this should be omitted if indicator style is not 'icon'
+					style = "icon", -- 'icon' | 'underline' | 'none',
 				},
-				buffer_close_icon = '󰅖',
-				modified_icon = '● ',
-				close_icon = ' ',
-				left_trunc_marker = ' ',
-				right_trunc_marker = ' ',
+				buffer_close_icon = "󰅖",
+				modified_icon = "● ",
+				close_icon = " ",
+				left_trunc_marker = " ",
+				right_trunc_marker = " ",
 				--- name_formatter can be used to change the buffer's label in the bufferline.
 				--- Please note some names can/will break the
 				--- bufferline so use this at your discretion knowing that it has
@@ -50,10 +50,10 @@ return {
 					-- tabnr (tabs only)   | int        | the "handle" of the tab, can be converted to its ordinal number using: `vim.api.nvim_tabpage_get_number(buf.tabnr)`
 				end,
 				max_name_length = 18,
-				max_prefix_length = 15,           -- prefix used when a buffer is de-duplicated
-				truncate_names = true,            -- whether or not tab names should be truncated
+				max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+				truncate_names = true, -- whether or not tab names should be truncated
 				tab_size = 18,
-				diagnostics = "nvim_lsp",         -- false | "nvim_lsp" | "coc",
+				diagnostics = "nvim_lsp", -- false | "nvim_lsp" | "coc",
 				diagnostics_update_in_insert = false, -- only applies to coc
 				diagnostics_update_on_event = true, -- use nvim's diagnostic handler
 				-- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
@@ -86,7 +86,7 @@ return {
 						text = "File Explorer", -- "File Explorer" | function ,
 						text_align = "left", -- "left" | "center" | "right"
 						separator = true,
-					}
+					},
 				},
 				color_icons = true, -- true | false whether or not to add the filetype icon highlights
 				get_element_icon = function(element)
@@ -94,32 +94,33 @@ return {
 					-- This can be used to change how bufferline fetches the icon
 					-- for an element e.g. a buffer or a tab.
 					-- e.g.
-					local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
+					local icon, hl =
+						require("nvim-web-devicons").get_icon_by_filetype(element.filetype, { default = false })
 					return icon, hl
 					-- or
 					-- local custom_map = {my_thing_ft: {icon = "my_thing_icon", hl}}
 					-- return custom_map[element.filetype]
 				end,
-				show_buffer_icons = true,    -- true | false, -- disable filetype icons for buffers
+				show_buffer_icons = true, -- true | false, -- disable filetype icons for buffers
 				show_buffer_close_icons = false, -- true | false,
-				show_close_icon = false,     -- true | false,
-				show_tab_indicators = true,  -- true | false,
+				show_close_icon = false, -- true | false,
+				show_tab_indicators = true, -- true | false,
 				show_duplicate_prefix = true, -- true | false, -- whether to show duplicate buffer prefix
 				duplicates_across_groups = true, -- whether to consider duplicate paths in different groups as duplicates
-				persist_buffer_sort = true,  -- whether or not custom sorted buffers should persist
-				move_wraps_at_ends = false,  -- whether or not the move command "wraps" at the first or last position
+				persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+				move_wraps_at_ends = false, -- whether or not the move command "wraps" at the first or last position
 				-- can also be a table containing 2 custom separators
 				-- [focused and unfocused]. eg: { '|', '|' }
-				separator_style = "slant",  -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
+				separator_style = "slant", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
 				enforce_regular_tabs = false, -- false | true,
 				always_show_bufferline = false, -- true | false,
 				auto_toggle_bufferline = true, -- true | false,
 				hover = {
 					enabled = true,
 					delay = 200,
-					reveal = { 'close' }
+					reveal = { "close" },
 				},
-				sort_by = 'id',
+				sort_by = "id",
 				-- 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | , function(
 				-- 	buffer_a, buffer_b)
 				-- -- add custom logic
@@ -130,16 +131,34 @@ return {
 				pick = {
 					alphabet = "abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ1234567890",
 				},
-			}
-		}
-		vim.keymap.set("n", "<space>bp", ":BufferLineTogglePin<CR>",
-			{ desc = "Pin/Unpin Buffer", noremap = true, silent = true })
+			},
+		})
+		vim.keymap.set(
+			"n",
+			"<space>bp",
+			":BufferLineTogglePin<CR>",
+			{ desc = "Pin/Unpin Buffer", noremap = true, silent = true }
+		)
 
 		-- Set up keymaps for buffer navigation and actions
-		vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { desc = "Move Tab Left", noremap = true, silent = true })
-		vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { desc = "Move Tab Right", noremap = true, silent = true })
-		vim.keymap.set("n", "<space>bp", ":BufferLineTogglePin<CR>",
-			{ desc = "Pin/Unpin Buffer", noremap = true, silent = true })
+		vim.keymap.set(
+			"n",
+			"<S-h>",
+			":BufferLineCyclePrev<CR>",
+			{ desc = "Move Tab Left", noremap = true, silent = true }
+		)
+		vim.keymap.set(
+			"n",
+			"<S-l>",
+			":BufferLineCycleNext<CR>",
+			{ desc = "Move Tab Right", noremap = true, silent = true }
+		)
+		vim.keymap.set(
+			"n",
+			"<space>bp",
+			":BufferLineTogglePin<CR>",
+			{ desc = "Pin/Unpin Buffer", noremap = true, silent = true }
+		)
 
 		-- Navigate to buffer 1-9 with space + number
 		for i = 1, 9 do
@@ -147,5 +166,5 @@ return {
 				vim.cmd("BufferLineGoToBuffer " .. i)
 			end, { desc = "Go to Buffer " .. i, noremap = true, silent = true })
 		end
-	end
+	end,
 }
